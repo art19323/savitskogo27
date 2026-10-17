@@ -1,0 +1,2385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спецификация чистовых материалов, мебели и оборудования</title>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --primary-accent: #0284c7;
+            --accent-hover: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --badge-bg: #f1f5f9;
+            --badge-text: #334155;
+            --tag-variant: #e0f2fe;
+            --tag-variant-text: #0369a1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 80px;
+        }
+
+        .header-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 36px 24px 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-badge strong {
+            color: #38bdf8;
+            font-size: 15px;
+        }
+
+        .controls-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .controls-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 260px;
+            max-width: 400px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: #ffffff;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-accent);
+            color: var(--primary-accent);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-accent);
+            border-color: var(--primary-accent);
+            color: #ffffff;
+        }
+
+        .main-container {
+            max-width: 1440px;
+            margin: 30px auto 0;
+            padding: 0 24px;
+        }
+
+        .category-section {
+            margin-bottom: 45px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .group-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .group-title-bar {
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .group-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-tag {
+            background: var(--tag-variant);
+            color: var(--tag-variant-text);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table.spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13.5px;
+        }
+
+        table.spec-table th {
+            background: #fdfdfd;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        table.spec-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        table.spec-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.spec-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .col-pos {
+            font-weight: 600;
+            color: #1e293b;
+            width: 15%;
+            min-width: 140px;
+        }
+
+        .col-name {
+            width: 25%;
+            min-width: 220px;
+        }
+
+        .name-title {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 4px;
+            line-height: 1.35;
+        }
+
+        .name-note {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        .col-img {
+            width: 90px;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .img-thumb {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+
+        .img-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .img-placeholder {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 11px;
+            text-align: center;
+            padding: 4px;
+        }
+
+        .col-brand {
+            width: 12%;
+            min-width: 110px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .col-art {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .col-size {
+            width: 14%;
+            min-width: 120px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .col-link {
+            width: 12%;
+            min-width: 110px;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f9ff;
+            color: var(--primary-accent);
+            border: 1px solid #bae6fd;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-link:hover {
+            background: var(--primary-accent);
+            color: #ffffff;
+            border-color: var(--primary-accent);
+        }
+
+        .col-contacts {
+            width: 11%;
+            min-width: 100px;
+        }
+
+        .contact-badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .contact-badge:hover {
+            background: #e2e8f0;
+            color: var(--primary);
+        }
+
+        .print-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        @media print {
+            .header-hero {
+                background: none;
+                color: black;
+                padding: 10px 0;
+            }
+            .controls-sticky, .print-btn {
+                display: none !important;
+            }
+            .group-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-hero">
+        <div class="header-container">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h1 class="header-title">📋 Спецификация чистовых материалов, мебели и оборудования</h1>
+                    <p class="header-subtitle">Дизайн-проект интерьера | Сводная интерактивная ведомость комплектации</p>
+                </div>
+                <button class="print-btn" onclick="window.print()">
+                    🖨️ Распечатать / В PDF
+                </button>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-badge">Всего позиций: <strong>55</strong></div>
+                <div class="stat-badge">Категорий: <strong>5</strong></div>
+                <div class="stat-badge">Группировка: <strong>Аналоги и варианты сведены в единые блоки</strong></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="controls-sticky">
+        <div class="controls-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="specSearch" class="search-input" placeholder="Поиск по наименованию, бренду, артикулу..." onkeyup="filterSpec()">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory('all', this)">Все категории</button>
+                <button class="filter-btn" onclick="filterCategory('Отделочные материалы', this)">Отделочные материалы</button>
+<button class="filter-btn" onclick="filterCategory('Мебель', this)">Мебель</button>
+<button class="filter-btn" onclick="filterCategory('Освещение', this)">Освещение</button>
+<button class="filter-btn" onclick="filterCategory('Сантехника', this)">Сантехника</button>
+<button class="filter-btn" onclick="filterCategory('Бытовая техника', this)">Бытовая техника</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-container" id="specContainer">
+        
+        <section class="category-section" data-category="Отделочные материалы">
+            <div class="category-header">
+                <h2 class="category-title">📂 Отделочные материалы</h2>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">6 поз.</span>
+            </div>
+            
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Керамогранит / Напольная и настенная плитка</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="керамогранит argenta westone cream mat 120x60 см argenta (испания) 100036 керамогранит westone cream terracotta.by">
+                                <td class="col-pos">Керамогранит Westone Cream</td>
+                                <td class="col-name">
+                                    <div class="name-title">Керамогранит Argenta Westone Cream MAT 120x60 см</div>
+                                    <div class="name-note">Вариант 1 (матовый, кремовый оттенок)</div>
+                                </td>
+                                <td class="col-img"><img src="https://terracotta.by:443/upload/iblock/759/8ha7j8kz3k8f3grsnqolojpl21sx3i8q.png" class="img-thumb" alt="Керамогранит Westone Cream" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Argenta (Испания)</td>
+                                <td><span class="col-art">100036</span></td>
+                                <td class="col-size">1200 × 600 мм</td>
+                                <td class="col-link">
+                                    <a href="https://terracotta.by/catalog/plitka/100036/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://terracotta.by" target="_blank" class="contact-badge">terracotta.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="керамогранит prissmacer cross easton marfil 120x60 см prissmacer (испания) 100615 керамогранит cross easton marfil terracotta.by">
+                                <td class="col-pos">Керамогранит Cross Easton Marfil</td>
+                                <td class="col-name">
+                                    <div class="name-title">Керамогранит Prissmacer Cross Easton Marfil 120x60 см</div>
+                                    <div class="name-note">Вариант 2 (фактурный мраморный/каменный рисунок)</div>
+                                </td>
+                                <td class="col-img"><img src="https://terracotta.by:443/upload/dev2fun_opengraph/c91/00888_terracotta_by_catalog_plitka_100615_.png" class="img-thumb" alt="Керамогранит Cross Easton Marfil" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Prissmacer (Испания)</td>
+                                <td><span class="col-art">100615</span></td>
+                                <td class="col-size">1200 × 600 мм</td>
+                                <td class="col-link">
+                                    <a href="https://terracotta.by/catalog/plitka/100615/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://terracotta.by" target="_blank" class="contact-badge">terracotta.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Напольные покрытия</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="ламинат tulesna selene lf501-06 берингия (33 класс / 8 мм) tulesna lf501-06 ламинат 33 класс triopol.by">
+                                <td class="col-pos">Ламинат 33 класс</td>
+                                <td class="col-name">
+                                    <div class="name-title">Ламинат Tulesna Selene LF501-06 Берингия (33 класс / 8 мм)</div>
+                                    <div class="name-note">Влагостойкий ламинат с фаской 4V</div>
+                                </td>
+                                <td class="col-img"><img src="https://triopol.by/wp-content/uploads/2023/10/lf501-06-beringiya-1.jpg" class="img-thumb" alt="Ламинат 33 класс" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Tulesna</td>
+                                <td><span class="col-art">LF501-06</span></td>
+                                <td class="col-size">1380 × 193 × 8 мм</td>
+                                <td class="col-link">
+                                    <a href="https://triopol.by/product/laminat-33-klassa-tulesna-selene-lf501-06-beringiya/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://triopol.by" target="_blank" class="contact-badge">triopol.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Плинтусы и профили</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="алюминиевый плинтус nz082 ohz nz-082 плинтус скрытого/микро монтажа ohz.by">
+                                <td class="col-pos">Плинтус скрытого/микро монтажа</td>
+                                <td class="col-name">
+                                    <div class="name-title">Алюминиевый плинтус NZ082</div>
+                                    <div class="name-note">Минималистичный алюминиевый профиль</div>
+                                </td>
+                                <td class="col-img"><img src="https://www.ohz.by/images/products/nz082.jpg" class="img-thumb" alt="Плинтус скрытого/микро монтажа" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">OHZ</td>
+                                <td><span class="col-art">NZ-082</span></td>
+                                <td class="col-size">Высота 80 мм, длина 2500 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.ohz.by/plintus-nz-082" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://ohz.by" target="_blank" class="contact-badge">ohz.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="теневая рейка laconistiq light mini (черный) laconistiq light mini bl теневая рейка triopol.by">
+                                <td class="col-pos">Теневая рейка</td>
+                                <td class="col-name">
+                                    <div class="name-title">Теневая рейка Laconistiq Light Mini (черный)</div>
+                                    <div class="name-note">Для создания теневого шва со светодиодной подсветкой</div>
+                                </td>
+                                <td class="col-img"><img src="https://triopol.by/wp-content/uploads/2023/05/laconistiq-light-mini-black.jpg" class="img-thumb" alt="Теневая рейка" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Laconistiq</td>
+                                <td><span class="col-art">Light Mini BL</span></td>
+                                <td class="col-size">Длина 2000 мм</td>
+                                <td class="col-link">
+                                    <a href="https://triopol.by/product/tenevaya-rejka-laconistiq-light-mini-chernyj/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://triopol.by" target="_blank" class="contact-badge">triopol.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Декор и настенные покрытия</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="дизайнерские бесшовные обои/панно «под открытым небом» vinni (беларусь) 764278555-479480965401 фреска / обои vinni.by">
+                                <td class="col-pos">Фреска / Обои</td>
+                                <td class="col-name">
+                                    <div class="name-title">Дизайнерские бесшовные обои/панно «Под открытым небом»</div>
+                                    <div class="name-note">Абстрактное акцентное панно</div>
+                                </td>
+                                <td class="col-img"><img src="https://static.tildacdn.biz/stor3830-3039-4665-b762-383663643338/75012995.jpg" class="img-thumb" alt="Фреска / Обои" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Vinni (Беларусь)</td>
+                                <td><span class="col-art">764278555-479480965401</span></td>
+                                <td class="col-size">Индивидуальный размер под стену</td>
+                                <td class="col-link">
+                                    <a href="https://vinni.by/catalog/abstract/tproduct/764278555-479480965401-pod-otkritim-nebom" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://vinni.by" target="_blank" class="contact-badge">vinni.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-section" data-category="Мебель">
+            <div class="category-header">
+                <h2 class="category-title">📂 Мебель</h2>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">10 поз.</span>
+            </div>
+            
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Мягкая мебель: Диваны</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="диван угловой аронт мини (велюр светло-розовый / velvet pink) divan.by 24612-7-1 диван угловой divan.by">
+                                <td class="col-pos">Диван угловой</td>
+                                <td class="col-name">
+                                    <div class="name-title">Диван угловой Аронт Мини (Велюр Светло-розовый / Velvet Pink)</div>
+                                    <div class="name-note">Компактный угловой диван с механизмом трансформации</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzUyMzA5ODguanBn.jpg" class="img-thumb" alt="Диван угловой" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">24612-7-1</span></td>
+                                <td class="col-size">2160 × 1550 × 860 мм (сп. место 1400×2000)</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/divan-uglovoj-aront-mini-velvet-pink?upholstery=24612-7-1" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Мягкая мебель: Кресла и пуфы</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="кресло тилар (мех молочный / cozy milk) divan.by 68a6d09e8159b кресло мягкое divan.by">
+                                <td class="col-pos">Кресло мягкое</td>
+                                <td class="col-name">
+                                    <div class="name-title">Кресло Тилар (Мех Молочный / Cozy Milk)</div>
+                                    <div class="name-note">Трендовая тактильная обивка букле/мех</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzU2OTk5NzkucG5n.jpg" class="img-thumb" alt="Кресло мягкое" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">68a6d09e8159b</span></td>
+                                <td class="col-size">800 × 780 × 770 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/kreslo-tilar-cozy-milk_68a6d09e8159b" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="пуф ньюбери (велюр серый / velvet grey) divan.by 24612-7-1_2716629 пуф мягкий divan.by">
+                                <td class="col-pos">Пуф мягкий</td>
+                                <td class="col-name">
+                                    <div class="name-title">Пуф Ньюбери (Велюр Серый / Velvet Grey)</div>
+                                    <div class="name-note">Лаконичный пуф на металлических ножках</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzU4NDkxODkucG5n.jpg" class="img-thumb" alt="Пуф мягкий" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">24612-7-1_2716629</span></td>
+                                <td class="col-size">420 × 420 × 440 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/puf-nyuberi-velvet-grey?upholstery=24612-7-1&legs=2716629-170-1" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Спальня: Кровати</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="кровать фостер 160 (шенилл терракотовый / soft terra) divan.by foster-160-terra кровать двуспальная divan.by">
+                                <td class="col-pos">Кровать двуспальная</td>
+                                <td class="col-name">
+                                    <div class="name-title">Кровать Фостер 160 (Шенилл Терракотовый / Soft Terra)</div>
+                                    <div class="name-note">Мягкое изголовье, терракотовый акцент</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzQ3ODI2NjAucG5n.jpg" class="img-thumb" alt="Кровать двуспальная" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">Foster-160-Terra</span></td>
+                                <td class="col-size">1780 × 2220 × 1050 мм (сп. место 1600×2000)</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/krovat-foster-160-soft-terra" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Обеденные стулья (Варианты на выбор)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="стул одар-3 (мех белый / ножки натуральный массив) divan.by odar-3-white стул обеденный (вариант 1) divan.by">
+                                <td class="col-pos">Стул обеденный (Вариант 1)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стул Одар-3 (Мех Белый / Ножки Натуральный массив)</div>
+                                    <div class="name-note">Вариант 1: мягкая обивка букле/мех + дерево</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzUxNDU5MjQucG5n.jpg" class="img-thumb" alt="Стул обеденный (Вариант 1)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">Odar-3-White</span></td>
+                                <td class="col-size">560 × 580 × 820 мм (высота посадки 480 мм)</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/stul-odar-3-cozy-white" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="стул айвин (велюр бежевый / ножки натуральный массив) divan.by ayvin-beige стул обеденный (вариант 2) divan.by">
+                                <td class="col-pos">Стул обеденный (Вариант 2)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стул Айвин (Велюр Бежевый / Ножки Натуральный массив)</div>
+                                    <div class="name-note">Вариант 2: износостойкий велюр теплого оттенка</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzU1ODU1NjcucG5n.jpg" class="img-thumb" alt="Стул обеденный (Вариант 2)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">Ayvin-Beige</span></td>
+                                <td class="col-size">530 × 560 × 830 мм (высота посадки 470 мм)</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/stul-ajvin-velvet-beige" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Складные стулья (Варианты поставщиков)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="стул складной деревянный хоф (массив бука / березы) bentwood / hof 788159696 стул складной деревянный хоф (ozon) ozon.by">
+                                <td class="col-pos">Стул складной деревянный Хоф (Ozon)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стул складной деревянный Хоф (массив бука / березы)</div>
+                                    <div class="name-note">Покупка на маркетплейсе Ozon (быстрая доставка)</div>
+                                </td>
+                                <td class="col-img"><img src="https://ir.ozone.ru/s3/multimedia-1-m/wc1000/7057038166.jpg" class="img-thumb" alt="Стул складной деревянный Хоф (Ozon)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">BentWood / Hof</td>
+                                <td><span class="col-art">788159696</span></td>
+                                <td class="col-size">450 × 480 × 780 мм (в сложенном виде 450×70×880)</td>
+                                <td class="col-link">
+                                    <a href="https://ozon.by/product/stul-skladnoy-derevyannyy-hof-dlya-kuhni-788159696/?from_sku=1638309042&oos_search=false" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://ozon.by" target="_blank" class="contact-badge">ozon.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="стул складной «хоф» от производителя bentwood bentwood hof-bw стул складной деревянный хоф (bentwood) bentwood.ru">
+                                <td class="col-pos">Стул складной деревянный Хоф (Bentwood)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стул складной «Хоф» от производителя Bentwood</div>
+                                    <div class="name-note">Прямой заказ от фабрики-производителя</div>
+                                </td>
+                                <td class="col-img"><img src="https://www.bentwood.ru/upload/iblock/c38/c38a2c2ff81df983a992ebad9cfae50d.jpg" class="img-thumb" alt="Стул складной деревянный Хоф (Bentwood)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">BentWood</td>
+                                <td><span class="col-art">Hof-BW</span></td>
+                                <td class="col-size">450 × 480 × 780 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.bentwood.ru/catalog/stulya_main/stul_khof/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://bentwood.ru" target="_blank" class="contact-badge">bentwood.ru</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Столы и журнальные столики</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="журнальный стол хэйко-2 (черный) divan.by heyko-2-black журнальный стол divan.by">
+                                <td class="col-pos">Журнальный стол</td>
+                                <td class="col-name">
+                                    <div class="name-title">Журнальный стол Хэйко-2 (Черный)</div>
+                                    <div class="name-note">Лаконичный круглый столик в гостиную</div>
+                                </td>
+                                <td class="col-img"><img src="https://cdn.servicecdn.ru/@wmp-core/img/v1/rs:fit:1200:630:1:1:ce:0:0/g:ce:0:0/bg:f5f3f1/q:85/czM6Ly9kaXZhbi9wcm9kdWN0LzU3Mzk2NTgucG5n.jpg" class="img-thumb" alt="Журнальный стол" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Divan.by</td>
+                                <td><span class="col-art">Heyko-2-Black</span></td>
+                                <td class="col-size">Ø 600 мм, высота 450 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.divan.by/product/jurnalnyj-stol-hejko-2-black" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://divan.by" target="_blank" class="contact-badge">divan.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Мебельная фурнитура и трансформеры</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="механизм для выдвижного скрытого стола starax s-2145-a starax (турция) s-2145-a механизм выдвижного стола forte-plast.by">
+                                <td class="col-pos">Механизм выдвижного стола</td>
+                                <td class="col-name">
+                                    <div class="name-title">Механизм для выдвижного скрытого стола Starax S-2145-A</div>
+                                    <div class="name-note">Скрытая система выдвижного стола из кухонного ящика</div>
+                                </td>
+                                <td class="col-img"><img src="https://forte-plast.by/image/cache/catalog/starax/s-2145-a-500x500.jpg" class="img-thumb" alt="Механизм выдвижного стола" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Starax (Турция)</td>
+                                <td><span class="col-art">S-2145-A</span></td>
+                                <td class="col-size">В базу кухни/шкафа 600–900 мм</td>
+                                <td class="col-link">
+                                    <a href="https://forte-plast.by/mebelnoe-napolnenie/napolnenie-dlya-kukhni/mekhanizmi-dlya-vidvizhnogo-stola/mekhanizm-dlya-vidvizhnogo-stola-starax-s-2145-a" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://forte-plast.by" target="_blank" class="contact-badge">forte-plast.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-section" data-category="Освещение">
+            <div class="category-header">
+                <h2 class="category-title">📂 Освещение</h2>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">8 поз.</span>
+            </div>
+            
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Точечные и настенные светильники</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="потолочный светильник maytoni technical intro dl111-gu10-w maytoni (германия) dl111-gu10-w точечный накладной светильник massive.by">
+                                <td class="col-pos">Точечный накладной светильник</td>
+                                <td class="col-name">
+                                    <div class="name-title">Потолочный светильник Maytoni Technical Intro DL111-GU10-W</div>
+                                    <div class="name-note">Цилиндрический спот под лампу GU10 (белый)</div>
+                                </td>
+                                <td class="col-img"><img src="https://www.massive.by/image/cache/catalog/maytoni_2022/DL111-GU10-W-500x500.jpg" class="img-thumb" alt="Точечный накладной светильник" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni (Германия)</td>
+                                <td><span class="col-art">DL111-GU10-W</span></td>
+                                <td class="col-size">Ø 60 мм, высота 100 мм</td>
+                                <td class="col-link">
+                                    <a href="https://www.massive.by/product/svetilnik-maytoni-technical-intro-dl111-gu10-w" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://massive.by" target="_blank" class="contact-badge">massive.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="настенный светодиодный светильник freya mystery fr6063wl-l20b freya (германия) fr6063wl-l20b настенный светильник (бра) massive.by">
+                                <td class="col-pos">Настенный светильник (Бра)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Настенный светодиодный светильник Freya Mystery FR6063WL-L20B</div>
+                                    <div class="name-note">Графичное дизайнерское бра черного цвета</div>
+                                </td>
+                                <td class="col-img"><img src="https://www.massive.by/image/cache/catalog/freya_2022/FR6063WL-L20B-500x500.jpg" class="img-thumb" alt="Настенный светильник (Бра)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Freya (Германия)</td>
+                                <td><span class="col-art">FR6063WL-L20B</span></td>
+                                <td class="col-size">Высота 600 мм, ширина 60 мм, глубина 80 мм (LED 20W)</td>
+                                <td class="col-link">
+                                    <a href="https://www.massive.by/product/svetilnik-freya-mystery-fr6063wl-l20b" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://massive.by" target="_blank" class="contact-badge">massive.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Магнитная трековая система Exility (Шинопроводы)</div>
+                    <span class="group-tag">4 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="шинопровод 3м exility встраиваемый под гкл 9,5мм trx034-423b (черный) maytoni trx034-423b встраиваемый шинопровод под гкл maytoni.ru">
+                                <td class="col-pos">Встраиваемый шинопровод под ГКЛ</td>
+                                <td class="col-name">
+                                    <div class="name-title">Шинопровод 3м Exility встраиваемый под ГКЛ 9,5мм TRX034-423B (черный)</div>
+                                    <div class="name-note">Монтаж заподлицо в потолок из ГКЛ</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/c38/TRX034-423B_1.jpg" class="img-thumb" alt="Встраиваемый шинопровод под ГКЛ" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TRX034-423B</span></td>
+                                <td class="col-size">Длина 3000 мм, глубина врезки под гипсокартон</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-exility/shinoprovod-mag/trx034-423b/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="шинопровод 3м exility накладной/подвесной trx034-413b (черный) maytoni trx034-413b накладной/подвесной шинопровод maytoni.ru">
+                                <td class="col-pos">Накладной/подвесной шинопровод</td>
+                                <td class="col-name">
+                                    <div class="name-title">Шинопровод 3м Exility накладной/подвесной TRX034-413B (черный)</div>
+                                    <div class="name-note">Накладной или подвесной монтаж</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/285/TRX034-413B_1.jpg" class="img-thumb" alt="Накладной/подвесной шинопровод" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TRX034-413B</span></td>
+                                <td class="col-size">Длина 3000 × 26 × 52 мм</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-exility/shinoprovod-mag/trx034-413b/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="шинопровод exility для натяжного пвх потолка 2м trx034-sch-422b maytoni trx034-sch-422b шинопровод под натяжной потолок 2м maytoni.ru">
+                                <td class="col-pos">Шинопровод под натяжной потолок 2м</td>
+                                <td class="col-name">
+                                    <div class="name-title">Шинопровод Exility для натяжного ПВХ потолка 2м TRX034-SCH-422B</div>
+                                    <div class="name-note">Специальный профиль для бесщелевой интеграции в натяжной потолок</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/789/TRX034-SCH-422B_1.jpg" class="img-thumb" alt="Шинопровод под натяжной потолок 2м" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TRX034-SCH-422B</span></td>
+                                <td class="col-size">Длина 2000 мм</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-exility/shinoprovod-mag/trx034-sch-422b/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="шинопровод exility для натяжного пвх потолка 3м trx034-sch-423b maytoni trx034-sch-423b шинопровод под натяжной потолок 3м maytoni.ru">
+                                <td class="col-pos">Шинопровод под натяжной потолок 3м</td>
+                                <td class="col-name">
+                                    <div class="name-title">Шинопровод Exility для натяжного ПВХ потолка 3м TRX034-SCH-423B</div>
+                                    <div class="name-note">Профиль 3 метра под натяжное полотно</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/9a2/TRX034-SCH-423B_1.jpg" class="img-thumb" alt="Шинопровод под натяжной потолок 3м" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TRX034-SCH-423B</span></td>
+                                <td class="col-size">Длина 3000 мм</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-exility/shinoprovod-mag/trx034-sch-423b/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Ультратонкая магнитная система Levity 5mm</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="шинопровод накладной 2м levity trx184-112b-1 (толщина 5мм, черный) maytoni trx184-112b-1 накладной шинопровод levity 2м maytoni.ru">
+                                <td class="col-pos">Накладной шинопровод Levity 2м</td>
+                                <td class="col-name">
+                                    <div class="name-title">Шинопровод накладной 2м Levity TRX184-112B-1 (толщина 5мм, черный)</div>
+                                    <div class="name-note">Ультратонкий накладной трек без опуска потолка</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/42a/TRX184-112B-1_1.jpg" class="img-thumb" alt="Накладной шинопровод Levity 2м" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TRX184-112B-1</span></td>
+                                <td class="col-size">Длина 2000 × 26 × 5.5 мм</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-5mm-levity/levity-shinoprovod/trx184-112b-1/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="трековый поворотный светильник фокус / focus led levity tr187-1-5w2.7k-m-b maytoni tr187-1-5w2.7k-m-b светильник focus levity maytoni.ru">
+                                <td class="col-pos">Светильник Focus Levity</td>
+                                <td class="col-name">
+                                    <div class="name-title">Трековый поворотный светильник Фокус / Focus LED Levity TR187-1-5W2.7K-M-B</div>
+                                    <div class="name-note">Магнитный акцентный спот для шины Levity</div>
+                                </td>
+                                <td class="col-img"><img src="https://maytoni.ru/upload/iblock/58c/TR187-1-5W2.7K-M-B_1.jpg" class="img-thumb" alt="Светильник Focus Levity" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Maytoni</td>
+                                <td><span class="col-art">TR187-1-5W2.7K-M-B</span></td>
+                                <td class="col-size">Ø 35 мм, 5W, 2700K теплый свет, угол 36°</td>
+                                <td class="col-link">
+                                    <a href="https://maytoni.ru/catalog/functional/trekovye-sistemy/magnitnaya-trekovaya-sistema-5mm-levity/levity-svetilniki/tr187-1-5w2-7k-m-b/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://maytoni.ru" target="_blank" class="contact-badge">maytoni.ru</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-section" data-category="Сантехника">
+            <div class="category-header">
+                <h2 class="category-title">📂 Сантехника</h2>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">19 поз.</span>
+            </div>
+            
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Смесители для раковины (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="смеситель для раковины высокий grocenberg gb3029 (никель брашированный) grocenberg (германия) gb3029 смеситель для раковины (высокий, дизайн 1) santehall.by">
+                                <td class="col-pos">Смеситель для раковины (Высокий, дизайн 1)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Смеситель для раковины высокий Grocenberg GB3029 (Никель брашированный)</div>
+                                    <div class="name-note">Вариант 1: цилиндрический высокий корпус под чашу</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/5b9/02yev95e9mhy5eb5zvhc3g7398b1q058.jpg" class="img-thumb" alt="Смеситель для раковины (Высокий, дизайн 1)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg (Германия)</td>
+                                <td><span class="col-art">GB3029</span></td>
+                                <td class="col-size">Высота 310 мм, вынос излива 185 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/smesiteli-stoyki-dlya-vannoy/smesiteli-dlya-umyvalnika/164501/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="смеситель для раковины высокий grocenberg gb3011 (никель брашированный) grocenberg (германия) gb3011 смеситель для раковины (высокий, дизайн 2) santehall.by">
+                                <td class="col-pos">Смеситель для раковины (Высокий, дизайн 2)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Смеситель для раковины высокий Grocenberg GB3011 (Никель брашированный)</div>
+                                    <div class="name-note">Вариант 2: геометричный дизайн ручки и корпуса</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/938/500_500_1/938ce105d15cb1d3fb6686e08dd1dfb0.jpg" class="img-thumb" alt="Смеситель для раковины (Высокий, дизайн 2)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg (Германия)</td>
+                                <td><span class="col-art">GB3011</span></td>
+                                <td class="col-size">Высота 295 мм, вынос излива 175 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/smesiteli-stoyki-dlya-vannoy/smesiteli-dlya-umyvalnika/164403/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Душевые стойки и системы (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="душевая система с термостатом grocenberg gb7099 (никель брашированный) grocenberg gb7099 душевая система (вариант 1) santehall.by">
+                                <td class="col-pos">Душевая система (Вариант 1)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Душевая система с термостатом Grocenberg GB7099 (Никель брашированный)</div>
+                                    <div class="name-note">Вариант 1: встроенная полка + излив</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/6ec/k9xszs7z0f2jtz4a3v078pfgz3229h2k.jpg" class="img-thumb" alt="Душевая система (Вариант 1)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg</td>
+                                <td><span class="col-art">GB7099</span></td>
+                                <td class="col-size">Тропический душ Ø 250 мм, штанга 900–1300 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/smesiteli-stoyki-dlya-vannoy/dushevye-stoyki/164676/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="душевая стойка со смесителем grocenberg gb7011 (никель брашированный) grocenberg gb7011 душевая система (вариант 2) santehall.by">
+                                <td class="col-pos">Душевая система (Вариант 2)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Душевая стойка со смесителем Grocenberg GB7011 (Никель брашированный)</div>
+                                    <div class="name-note">Вариант 2: квадратный тропический душ</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/dc9/a7c6x27e4qom591w673x43o2y01b0s1k.jpg" class="img-thumb" alt="Душевая система (Вариант 2)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg</td>
+                                <td><span class="col-art">GB7011</span></td>
+                                <td class="col-size">Тропический душ 250×250 мм, штанга 850–1250 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/smesiteli-stoyki-dlya-vannoy/dushevye-stoyki/164751/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Ванны акриловые 150 см (Варианты на выбор)</div>
+                    <span class="group-tag">4 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="ванна акриловая roxen alfa 150x70 см (арт. 240120-1570) roxen (финляндия) 240120-1570 ванна акриловая (вариант 1) santehall.by">
+                                <td class="col-pos">Ванна акриловая (Вариант 1)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Ванна акриловая Roxen Alfa 150x70 см (арт. 240120-1570)</div>
+                                    <div class="name-note">Вариант 1: строгая прямоугольная внутренняя чаша</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/bf6/500_500_1/bf64436531ceb83e3e0984852d7e4ba3.jpg" class="img-thumb" alt="Ванна акриловая (Вариант 1)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Roxen (Финляндия)</td>
+                                <td><span class="col-art">240120-1570</span></td>
+                                <td class="col-size">1500 × 700 × 440 мм (объем 165 л)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/vanny-i-shtorki/akrilovye-vanny/174815/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="ванна акриловая roxen classic 150x70 см (арт. 240100-1570) roxen (финляндия) 240100-1570 ванна акриловая (вариант 2) santehall.by">
+                                <td class="col-pos">Ванна акриловая (Вариант 2)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Ванна акриловая Roxen Classic 150x70 см (арт. 240100-1570)</div>
+                                    <div class="name-note">Вариант 2: анатомическая форма спинки</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/b13/500_500_1/b135bc87ff9e421c6186b514c1945fce.jpg" class="img-thumb" alt="Ванна акриловая (Вариант 2)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Roxen (Финляндия)</td>
+                                <td><span class="col-art">240100-1570</span></td>
+                                <td class="col-size">1500 × 700 × 420 мм (объем 160 л)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/vanny-i-shtorki/akrilovye-vanny/174810/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="ванна акриловая polimat classic 150x70 см с ножками polimat (польша) 00406 ванна акриловая (вариант 3) santehall.by">
+                                <td class="col-pos">Ванна акриловая (Вариант 3)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Ванна акриловая Polimat CLASSIC 150x70 см с ножками</div>
+                                    <div class="name-note">Вариант 3: 100% литьевой европейский акрил</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/783/500_500_1/7835b6b1bb448cefa37df214cb432857.jpg" class="img-thumb" alt="Ванна акриловая (Вариант 3)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Polimat (Польша)</td>
+                                <td><span class="col-art">00406</span></td>
+                                <td class="col-size">1500 × 700 × 400 мм (объем 145 л)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/vanny-i-shtorki/akrilovye-vanny/127799/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="ванна акриловая riho miami 150x70 см riho (чехия/нидерланды) b019001005 ванна акриловая (вариант 4) santehall.by">
+                                <td class="col-pos">Ванна акриловая (Вариант 4)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Ванна акриловая Riho Miami 150x70 см</div>
+                                    <div class="name-note">Вариант 4: премиум акрил Lucite с антибактериальным слоем</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/70e/500_500_1/70e318fb48b04a44bbfd6d03099cbe71.jpg" class="img-thumb" alt="Ванна акриловая (Вариант 4)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Riho (Чехия/Нидерланды)</td>
+                                <td><span class="col-art">B019001005</span></td>
+                                <td class="col-size">1500 × 700 × 430 мм (объем 155 л)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/vanny-i-shtorki/akrilovye-vanny/24038/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Унитазы подвесные (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="подвесной безободковый унитаз с функцией биде roxen antares bidet 530185-01x roxen 530185-01x унитаз подвесной с функцией биде santehall.by">
+                                <td class="col-pos">Унитаз подвесной с функцией биде</td>
+                                <td class="col-name">
+                                    <div class="name-title">Подвесной безободковый унитаз с функцией биде Roxen Antares Bidet 530185-01X</div>
+                                    <div class="name-note">Вариант 1: встроенная форсунка биде + микролифт сиденья</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/6f5/7m03j55w0s1461z0827299w3c92w4h2p.jpg" class="img-thumb" alt="Унитаз подвесной с функцией биде" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Roxen</td>
+                                <td><span class="col-art">530185-01X</span></td>
+                                <td class="col-size">535 × 360 × 355 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/keramika-installyatsii/unitazy/podvesnye-unitazy/146689/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="подвесной унитаз creavit free fe322-34cb00e с сиденьем kc0903 creavit (турция) fe322-34cb00e-0002 унитаз подвесной безободковый catalog.onliner.by">
+                                <td class="col-pos">Унитаз подвесной безободковый</td>
+                                <td class="col-name">
+                                    <div class="name-title">Подвесной унитаз Creavit Free FE322-34CB00E с сиденьем KC0903</div>
+                                    <div class="name-note">Вариант 2: безободковая чаша Rimless</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/tPzOaM6w-Y-Jt31k4-qW9bL71p2p7s6g0qX6c6T1P4U/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMi8wOS84YWRiMjI2NDU0ZmNlZDQ1ZmRjZWM0MGZjN2NiMzhmZS5qcGVn" class="img-thumb" alt="Унитаз подвесной безободковый" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Creavit (Турция)</td>
+                                <td><span class="col-art">FE322-34CB00E-0002</span></td>
+                                <td class="col-size">512 × 355 × 350 мм</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/wcpan/creavit/fe32234cb00e0kc0" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Инсталляции для унитаза (Варианты)</div>
+                    <span class="group-tag">3 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="инсталляция для подвесного унитаза grocenberg gs3050 (в комплекте с крепежом) grocenberg gs3050 инсталляция grocenberg santehall.by">
+                                <td class="col-pos">Инсталляция Grocenberg</td>
+                                <td class="col-name">
+                                    <div class="name-title">Инсталляция для подвесного унитаза Grocenberg GS3050 (в комплекте с крепежом)</div>
+                                    <div class="name-note">Вариант 1: монтажная рама с бачком и шумоизоляцией</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/c34/wz03iipdrj7z2f447f5lq17m1f3mfg20.jpg" class="img-thumb" alt="Инсталляция Grocenberg" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg</td>
+                                <td><span class="col-art">GS3050</span></td>
+                                <td class="col-size">1120 × 500 × 120–180 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/keramika-installyatsii/installyatsii/174606/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="инсталляция tece teceprofil 9.400.401 с крепежом и звукоизоляцией tece (германия) 9400401 инсталляция teceprofil 4в1 (santehall) santehall.by">
+                                <td class="col-pos">Инсталляция TECEprofil 4в1 (Santehall)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Инсталляция TECE TECEprofil 9.400.401 с крепежом и звукоизоляцией</div>
+                                    <div class="name-note">Вариант 2 (Santehall): немецкая надежность TECEprofil</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/1ae/t6h77r0582t0u4j67u32d2f707f59d57.jpg" class="img-thumb" alt="Инсталляция TECEprofil 4в1 (Santehall)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">TECE (Германия)</td>
+                                <td><span class="col-art">9400401</span></td>
+                                <td class="col-size">1120 × 500 × 150–200 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/keramika-installyatsii/installyatsii/37782/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="инсталляция tecebase 9.300.302 (комплект 4 в 1) tece (германия) 9.300.302 инсталляция tecebase 4в1 (onliner) catalog.onliner.by">
+                                <td class="col-pos">Инсталляция TECEbase 4в1 (Onliner)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Инсталляция TECEbase 9.300.302 (комплект 4 в 1)</div>
+                                    <div class="name-note">Вариант 3 (Onliner): популярный комплект TECEbase</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/h9hE03lGfF3nJ-wK9h7rU3m1bX8/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMi8wMy83NzE4NDFkMjk4MTM5Mjc5NmE3MjQ0ZjI4OGU3NDYwOC5qcGVn" class="img-thumb" alt="Инсталляция TECEbase 4в1 (Onliner)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">TECE (Германия)</td>
+                                <td><span class="col-art">9.300.302</span></td>
+                                <td class="col-size">1120 × 500 × 160 мм</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/installations/tece/9300302" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Кнопки смыва</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="клавиша смыва tece now 9240418 (цвет: никель матовый / брашированный) tece (германия) 9240418 кнопка смыва tece now keramalux.by">
+                                <td class="col-pos">Кнопка смыва TECE now</td>
+                                <td class="col-name">
+                                    <div class="name-title">Клавиша смыва TECE now 9240418 (Цвет: Никель матовый / Брашированный)</div>
+                                    <div class="name-note">Сверхтонкая панель, двухрежимный смыв, цвет под смесители</div>
+                                </td>
+                                <td class="col-img"><img src="https://keramalux.by/upload/iblock/c9b/c9bfd077c5f8bc27732a316c02611a36.jpg" class="img-thumb" alt="Кнопка смыва TECE now" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">TECE (Германия)</td>
+                                <td><span class="col-art">9240418</span></td>
+                                <td class="col-size">220 × 150 × 5 мм</td>
+                                <td class="col-link">
+                                    <a href="https://keramalux.by/catalog/knopki-dlya-installyatsiy/knopka-smyva-tece-now-9240418-nikel/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://keramalux.by" target="_blank" class="contact-badge">keramalux.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Кухонные мойки (Варианты по размеру)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="мойка кухонная из нержавеющей стали roxen simple 50 (gun metal / никель) roxen simple-50-gm кухонная мойка 50 см santehall.by">
+                                <td class="col-pos">Кухонная мойка 50 см</td>
+                                <td class="col-name">
+                                    <div class="name-title">Мойка кухонная из нержавеющей стали Roxen Simple 50 (Gun Metal / Никель)</div>
+                                    <div class="name-note">Вариант 1: чаша шириной 50 см</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/resize_cache/iblock/be6/500_500_1/be6ea3125219d36e2f1d2438811bc607.jpg" class="img-thumb" alt="Кухонная мойка 50 см" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Roxen</td>
+                                <td><span class="col-art">Simple-50-GM</span></td>
+                                <td class="col-size">500 × 450 × 210 мм (в базу от 55–60 см)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/moyki-smesiteli-filtry-dlya-kukhni/moyki/83914/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="мойка кухонная из нержавеющей стали roxen simple 45 (gun metal / никель) roxen simple-45-gm кухонная мойка 45 см santehall.by">
+                                <td class="col-pos">Кухонная мойка 45 см</td>
+                                <td class="col-name">
+                                    <div class="name-title">Мойка кухонная из нержавеющей стали Roxen Simple 45 (Gun Metal / Никель)</div>
+                                    <div class="name-note">Вариант 2: компактная чаша шириной 45 см</div>
+                                </td>
+                                <td class="col-img"><img src="http://santehall.by/upload/resize_cache/iblock/e74/500_500_1/e74c9657b98a05c74eb17ffcfc9eb448.jpg" class="img-thumb" alt="Кухонная мойка 45 см" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Roxen</td>
+                                <td><span class="col-art">Simple-45-GM</span></td>
+                                <td class="col-size">450 × 450 × 210 мм (в базу от 50 см)</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/moyki-smesiteli-filtry-dlya-kukhni/moyki/156842/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Кухонные смесители под фильтр (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="смеситель кухонный под фильтр grocenberg gb4096 на магните (никель) grocenberg gb4096 смеситель для кухни с магнитным фиксатором santehall.by">
+                                <td class="col-pos">Смеситель для кухни с магнитным фиксатором</td>
+                                <td class="col-name">
+                                    <div class="name-title">Смеситель кухонный под фильтр Grocenberg GB4096 на магните (Никель)</div>
+                                    <div class="name-note">Вариант 1: гибкий шланг с надежным магнитным держателем</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/404/6z66v462wwhm613h0o6n94l2s10j1915.jpg" class="img-thumb" alt="Смеситель для кухни с магнитным фиксатором" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg</td>
+                                <td><span class="col-art">GB4096</span></td>
+                                <td class="col-size">Высота 420 мм, вынос излива 220 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/moyki-smesiteli-filtry-dlya-kukhni/smesitel-dlya-moyki/164864/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="смеситель кухонный под фильтр с выдвижным изливом grocenberg gb4097 (никель) grocenberg gb4097 смеситель для кухни с выдвижным изливом santehall.by">
+                                <td class="col-pos">Смеситель для кухни с выдвижным изливом</td>
+                                <td class="col-name">
+                                    <div class="name-title">Смеситель кухонный под фильтр с выдвижным изливом Grocenberg GB4097 (Никель)</div>
+                                    <div class="name-note">Вариант 2: классический выдвижной скрытый излив</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/d76/f50l4k87m558999335f60y20p11m4y70.jpg" class="img-thumb" alt="Смеситель для кухни с выдвижным изливом" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Grocenberg</td>
+                                <td><span class="col-art">GB4097</span></td>
+                                <td class="col-size">Высота 390 мм, вынос излива 215 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/moyki-smesiteli-filtry-dlya-kukhni/smesitel-dlya-moyki/164876/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Аксессуары для ванной</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="двойной крючок для полотенец iddis petite pet2sb1i41 (черный/никель) iddis pet2sb1i41 крючки для полотенец santehall.by">
+                                <td class="col-pos">Крючки для полотенец</td>
+                                <td class="col-name">
+                                    <div class="name-title">Двойной крючок для полотенец IDDIS Petite PET2SB1i41 (Черный/Никель)</div>
+                                    <div class="name-note">Латунь с устойчивым PVD покрытием</div>
+                                </td>
+                                <td class="col-img"><img src="https://santehall.by:443/upload/iblock/a2b/8qf803730702k3s5b18x43c4078g0h3q.jpg" class="img-thumb" alt="Крючки для полотенец" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">IDDIS</td>
+                                <td><span class="col-art">PET2SB1i41</span></td>
+                                <td class="col-size">70 × 45 × 40 мм</td>
+                                <td class="col-link">
+                                    <a href="https://santehall.by/catalog/vanny-i-shtorki/aksessuary/derzhateli-dlya-polotenets/62275/" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://santehall.by" target="_blank" class="contact-badge">santehall.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-section" data-category="Бытовая техника">
+            <div class="category-header">
+                <h2 class="category-title">📂 Бытовая техника</h2>
+                <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">12 поз.</span>
+            </div>
+            
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Холодильники (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="холодильник hisense rb440n4wfe (черный/графит, no frost) hisense rb440n4wfe холодильник отдельностоящий catalog.onliner.by">
+                                <td class="col-pos">Холодильник отдельностоящий</td>
+                                <td class="col-name">
+                                    <div class="name-title">Холодильник Hisense RB440N4WFE (черный/графит, No Frost)</div>
+                                    <div class="name-note">Вариант 1: отдельностоящий холодильник в черном цвете</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/VaefCsWmUmaTzLUM5OyGFi3I2qbNRrHQ7yGVOMqI9YQ/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyNS9kYzhkYzkzY2UyODI2NzcyZWRjMjc1Njg0ZDMwNDM1My5qcGc" class="img-thumb" alt="Холодильник отдельностоящий" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Hisense</td>
+                                <td><span class="col-art">RB440N4WFE</span></td>
+                                <td class="col-size">2000 × 595 × 590 мм (объем 336 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/refrigerator/hisense/rb440n4wfe" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="встраиваемый холодильник samsung brb80f30bes0eo (no frost, spacemax) samsung brb80f30bes0eo холодильник встраиваемый spacemax catalog.onliner.by">
+                                <td class="col-pos">Холодильник встраиваемый SpaceMax</td>
+                                <td class="col-name">
+                                    <div class="name-title">Встраиваемый холодильник Samsung BRB80F30BES0EO (No Frost, SpaceMax)</div>
+                                    <div class="name-note">Вариант 2: полностью встраиваемый увеличенной высоты 193.5 см</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/3v1XvjWkLwF7Y5k9Z1X2X3X4X5X/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMy8xMC8xMjM0NTY3OC5qcGVn" class="img-thumb" alt="Холодильник встраиваемый SpaceMax" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Samsung</td>
+                                <td><span class="col-art">BRB80F30BES0EO</span></td>
+                                <td class="col-size">1935 × 540 × 550 мм (в нишу шкафа)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/refrigerator/samsung/brb80f30bes0eo" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Индукционные варочные панели (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="индукционная варочная панель bosch pue611bb5e (serie 4) bosch (германия/испания) pue611bb5e индукционная панель bosch (базовая) 5element.by">
+                                <td class="col-pos">Индукционная панель Bosch (Базовая)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Индукционная варочная панель Bosch PUE611BB5E (Serie 4)</div>
+                                    <div class="name-note">Вариант 1: 4 индукционные зоны, PowerBoost, TouchSelect</div>
+                                </td>
+                                <td class="col-img"><img src="https://5element.by/upload/resize_cache/iblock/816/500_500_1/816174_1.jpg" class="img-thumb" alt="Индукционная панель Bosch (Базовая)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Bosch (Германия/Испания)</td>
+                                <td><span class="col-art">PUE611BB5E</span></td>
+                                <td class="col-size">592 × 522 × 51 мм (врезка 560×490)</td>
+                                <td class="col-link">
+                                    <a href="https://5element.by/products/816174-varochnaya-panel-bosch-pue611bb5e#about" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://5element.by" target="_blank" class="contact-badge">5element.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="индукционная варочная панель bosch pie631hb1e (serie 6 / home connect) bosch (германия/испания) pie631hb1e индукционная панель bosch с рамкой 5element.by">
+                                <td class="col-pos">Индукционная панель Bosch с рамкой</td>
+                                <td class="col-name">
+                                    <div class="name-title">Индукционная варочная панель Bosch PIE631HB1E (Serie 6 / Home Connect)</div>
+                                    <div class="name-note">Вариант 2: премиальное управление DirectSelect + Home Connect</div>
+                                </td>
+                                <td class="col-img"><img src="https://5element.by/upload/resize_cache/iblock/801/500_500_1/801951_1.jpg" class="img-thumb" alt="Индукционная панель Bosch с рамкой" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Bosch (Германия/Испания)</td>
+                                <td><span class="col-art">PIE631HB1E</span></td>
+                                <td class="col-size">592 × 522 × 51 мм (с металлическим профилем)</td>
+                                <td class="col-link">
+                                    <a href="https://5element.by/products/801951-varochnaya-panel-bosch-pie631hb1e" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://5element.by" target="_blank" class="contact-badge">5element.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Духовые шкафы Bosch (Варианты исполнения)</div>
+                    <span class="group-tag">3 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="электрический духовой шкаф bosch serie 4 hqg572eb3 (черный глянец / пиролиз) bosch hqg572eb3 духовой шкаф bosch hqg572eb3 catalog.onliner.by">
+                                <td class="col-pos">Духовой шкаф Bosch HQG572EB3</td>
+                                <td class="col-name">
+                                    <div class="name-title">Электрический духовой шкаф Bosch Serie 4 HQG572EB3 (Черный глянец / пиролиз)</div>
+                                    <div class="name-note">Вариант 1: премиальная очистка Pyroluxe (черный)</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/f_gYh_5NlX9bYqB631B7j7eF2_s/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMi8wOC8xMGQ0MDU4ZjBhNjM1YmNkMzk3MWNlNmI5MTQwOTc2YS5qcGVn" class="img-thumb" alt="Духовой шкаф Bosch HQG572EB3" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Bosch</td>
+                                <td><span class="col-art">HQG572EB3</span></td>
+                                <td class="col-size">595 × 594 × 548 мм (объем 71 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/oven_cooker/bosch/hqg572eb3" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="электрический духовой шкаф bosch serie 4 hba534bw3 (белое стекло) bosch hba534bw3 духовой шкаф bosch hba534bw3 (белый) catalog.onliner.by">
+                                <td class="col-pos">Духовой шкаф Bosch HBA534BW3 (Белый)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Электрический духовой шкаф Bosch Serie 4 HBA534BW3 (Белое стекло)</div>
+                                    <div class="name-note">Вариант 2: стильное исполнение в белом стекле White Glass</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/a1b2c3d4e5f6g7h8/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMi8wNi9oYmE1MzRidzcz.anBn" class="img-thumb" alt="Духовой шкаф Bosch HBA534BW3 (Белый)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Bosch</td>
+                                <td><span class="col-art">HBA534BW3</span></td>
+                                <td class="col-size">595 × 594 × 548 мм (объем 71 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/oven_cooker/bosch/hba534bw3" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="электрический духовой шкаф bosch serie 4 hba534eb3 (черное стекло) bosch hba534eb3 духовой шкаф bosch hba534eb3 (черный) catalog.onliner.by">
+                                <td class="col-pos">Духовой шкаф Bosch HBA534EB3 (Черный)</td>
+                                <td class="col-name">
+                                    <div class="name-title">Электрический духовой шкаф Bosch Serie 4 HBA534EB3 (Черное стекло)</div>
+                                    <div class="name-note">Вариант 3: черное стекло с утапливаемыми переключателями</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/o88m_x35G1Z_h9T9V8M7Y7eF2_s/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMi8wNi9oYmE1MzRlYjMuanBn" class="img-thumb" alt="Духовой шкаф Bosch HBA534EB3 (Черный)" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Bosch</td>
+                                <td><span class="col-art">HBA534EB3</span></td>
+                                <td class="col-size">595 × 594 × 548 мм (объем 71 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/oven_cooker/bosch/hba534eb3" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Встраиваемые микроволновые печи (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="встраиваемая микроволновая печь maunfeld mbmo.925.sgb09 (25 л, гриль) maunfeld (великобритания/кнр) mbmo925sgb09 свч печь maunfeld 25л catalog.onliner.by">
+                                <td class="col-pos">СВЧ печь Maunfeld 25л</td>
+                                <td class="col-name">
+                                    <div class="name-title">Встраиваемая микроволновая печь MAUNFELD MBMO.925.SGB09 (25 л, гриль)</div>
+                                    <div class="name-note">Вариант 1: увеличенный объем 25 л, черное стекло + гриль</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/n1m2k3l4j5h6g7f8/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMS8wNy9tYm1vOTI1c2diMDkuanBn" class="img-thumb" alt="СВЧ печь Maunfeld 25л" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">MAUNFELD (Великобритания/КНР)</td>
+                                <td><span class="col-art">MBMO925SGB09</span></td>
+                                <td class="col-size">595 × 400 × 388 мм (объем 25 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/microvawe/maunfeld/mbmo925sgb09" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="встраиваемая микроволновая печь maunfeld mbmo.20.8gb (20 л, сенсор) maunfeld mbmo208gb свч печь maunfeld 20л catalog.onliner.by">
+                                <td class="col-pos">СВЧ печь Maunfeld 20л</td>
+                                <td class="col-name">
+                                    <div class="name-title">Встраиваемая микроволновая печь MAUNFELD MBMO.20.8GB (20 л, сенсор)</div>
+                                    <div class="name-note">Вариант 2: компактная модель объемом 20 л</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/x9y8z7w6v5u4t3s2/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMC8wNS9tYm1vMjA4Z2IuanBn" class="img-thumb" alt="СВЧ печь Maunfeld 20л" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">MAUNFELD</td>
+                                <td><span class="col-art">MBMO208GB</span></td>
+                                <td class="col-size">595 × 343 × 382 мм (объем 20 л)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/microvawe/maunfeld/mbmo208gb" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Стирально-сушильные машины Samsung (Варианты)</div>
+                    <span class="group-tag">2 варианта на выбор</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="стирально-сушильная машина samsung wd10t654cbx/lp (черный титан, ai control) samsung wd10t654cbx/lp стирально-сушильная машина 10.5 / 6 кг catalog.onliner.by">
+                                <td class="col-pos">Стирально-сушильная машина 10.5 / 6 кг</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стирально-сушильная машина Samsung WD10T654CBX/LP (Черный титан, AI Control)</div>
+                                    <div class="name-note">Вариант 1: максимальная загрузка (10.5 кг стирка / 6 кг сушка)</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/k8j7h6g5f4d3s2a1/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMS8wOC93ZDEwdDY1NGNieGxwLmpwZWc" class="img-thumb" alt="Стирально-сушильная машина 10.5 / 6 кг" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Samsung</td>
+                                <td><span class="col-art">WD10T654CBX/LP</span></td>
+                                <td class="col-size">600 × 850 × 600 мм (стирка 10.5 кг / сушка 6 кг)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/washingmachine/samsung/wd10t654cbxlp" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+
+                            <tr class="item-row" data-text="стирально-сушильная машина samsung wd80t554cbx/ld (черный титан, addwash) samsung wd80t554cbx/ld стирально-сушильная машина 8.0 / 5 кг catalog.onliner.by">
+                                <td class="col-pos">Стирально-сушильная машина 8.0 / 5 кг</td>
+                                <td class="col-name">
+                                    <div class="name-title">Стирально-сушильная машина Samsung WD80T554CBX/LD (Черный титан, AddWash)</div>
+                                    <div class="name-note">Вариант 2: узкая компактная модель со смотровым люком AddWash</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/z1x2c3v4b5n6m7l8/w:170/h:250/z:2/f:jpg/aHR0cHM6Ly9jb250ZW50Lm9ubGluZXIuYnkvY2F0YWxvZy9kZXZpY2UvMjAyMS8wOC93ZDgwdDU1NGNieGxkLmpwZWc" class="img-thumb" alt="Стирально-сушильная машина 8.0 / 5 кг" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Samsung</td>
+                                <td><span class="col-art">WD80T554CBX/LD</span></td>
+                                <td class="col-size">600 × 850 × 450–520 мм (стирка 8 кг / сушка 5 кг)</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/washingmachine/samsung/wd80t554cbxld" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="group-card">
+                <div class="group-title-bar">
+                    <div class="group-title">🏷️ Роботы-пылесосы с автостанцией</div>
+                    <span class="group-tag">Основная позиция</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Позиция</th>
+                                <th>Наименование / Модель</th>
+                                <th>Изображение</th>
+                                <th>Производитель</th>
+                                <th>Артикул</th>
+                                <th>Размер / Габариты</th>
+                                <th>Ссылка на позицию</th>
+                                <th>Контакты / Сайт</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="item-row" data-text="робот-пылесос dreame aqua 10 ultra roller black (со станцией самоочистки и подключения к водопроводу) dreame (xiaomi ecosystem) aqua10ultrarolbl моющий робот-пылесос catalog.onliner.by">
+                                <td class="col-pos">Моющий робот-пылесос</td>
+                                <td class="col-name">
+                                    <div class="name-title">Робот-пылесос Dreame Aqua 10 Ultra Roller Black (со станцией самоочистки и подключения к водопроводу)</div>
+                                    <div class="name-note">Флагман со станцией промывки горячей водой и модулем скрытого подключения к воде/сливу</div>
+                                </td>
+                                <td class="col-img"><img src="https://imgproxy.onliner.by/dreame_aqua10_ultra.jpg" class="img-thumb" alt="Моющий робот-пылесос" onerror="this.onerror=null; this.parentElement.innerHTML='<div class="img-placeholder">Фото на сайте</div>';"></td>
+                                <td class="col-brand">Dreame (Xiaomi Ecosystem)</td>
+                                <td><span class="col-art">Aqua10UltraRolBl</span></td>
+                                <td class="col-size">База: 457 × 340 × 590 мм, Робот: Ø 350 × 97 мм</td>
+                                <td class="col-link">
+                                    <a href="https://catalog.onliner.by/robotcleaner/dreame/aqua10ultrarolbl" target="_blank" rel="noopener noreferrer" class="btn-link">
+                                        Перейти к товару ↗
+                                    </a>
+                                </td>
+                                <td class="col-contacts">
+                                    <a href="https://catalog.onliner.by" target="_blank" class="contact-badge">catalog.onliner.by</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function filterCategory(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const sections = document.querySelectorAll('.category-section');
+            sections.forEach(sec => {
+                if (category === 'all' || sec.getAttribute('data-category') === category) {
+                    sec.style.display = 'block';
+                } else {
+                    sec.style.display = 'none';
+                }
+            });
+        }
+
+        function filterSpec() {
+            const query = document.getElementById('specSearch').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('.item-row');
+
+            rows.forEach(row => {
+                const text = row.getAttribute('data-text');
+                if (text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.querySelectorAll('.group-card').forEach(card => {
+                const visibleRows = card.querySelectorAll('.item-row:not([style*="display: none"])');
+                if (visibleRows.length === 0) {
+                    card.style.display = 'none';
+                } else {
+                    card.style.display = 'block';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
